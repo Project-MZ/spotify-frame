@@ -7,8 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "concurrently -r 'eslint .' 'prettier --check --log-level warn .'",
-    "format": "concurrently -r 'eslint . --fix' 'prettier --write --log-level warn .'"
+    "lint": "concurrently -r 'eslint .' 'stylelint .' 'prettier --check --log-level warn .'",
+    "format": "concurrently -r 'eslint --fix .' 'stylelint --fix .' 'prettier --write --log-level warn .'"
   },
   "dependencies": {
     "next": "14.0.4",
@@ -39,6 +39,11 @@
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.10",
+    "stylelint": "^15.11.0",
+    "stylelint-config-css-modules": "^4.4.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^34.0.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
     "yarn-deduplicate": "^6.0.2"
