@@ -1,0 +1,29 @@
+// https://nextjs.org/docs/advanced-features/debugging
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev"
+    },
+    {
+      "name": "Next Client",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Next Fullstack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
