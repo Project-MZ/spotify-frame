@@ -1,9 +1,16 @@
-import { SpotifyFrame } from '~/app/features/spotify';
+import { SpotifyFrame } from '~/features/spotify';
 
-const Home = (): JSX.Element => (
-  <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-    <SpotifyFrame />
+const Page = (): JSX.Element => (
+  <main className='flex min-h-screen flex-col items-center bg-gray-200'>
+    <header>header</header>
+    <section className='grid h-full w-full grow grid-cols-1 md:grid-cols-2'>
+      <div className='grid place-content-center p-8 md:p-16'>asdf</div>
+      <div className='grid place-content-center p-8 md:p-16'>
+        <SpotifyFrame />
+      </div>
+    </section>
+    <footer>footer</footer>
   </main>
 );
 
-export default Home;
+export default Page;
