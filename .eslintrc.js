@@ -94,6 +94,14 @@ module.exports = {
             aspects: ['invalidHref', 'preferButton'],
           },
         ],
+
+        'jsx-a11y/label-has-associated-control': [
+          2,
+          {
+            labelComponents: ['Label'],
+            controlComponents: ['Input'],
+          },
+        ],
       },
     },
 

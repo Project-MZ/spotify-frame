@@ -17,15 +17,18 @@ type Props = {
   base: number;
   /** aspect ratio */
   aspectRatio: number;
+  /** max width */
+  maxWidth?: number;
 };
 
 /**
  * {@link Stage} that resize automatically
  */
 export const FullWidthStage = ({
+  children,
   base,
   aspectRatio,
-  children,
+  maxWidth = Infinity,
   ...props
 }: Props): JSX.Element => {
   /** ref to div to calc real width and height of canvas element */
@@ -41,11 +44,11 @@ export const FullWidthStage = ({
     const parent = ref.current?.parentElement;
     if (!parent) return;
     const computedStyle = getComputedStyle(parent);
-    setWidth(
+    const actualWidth =
       parent.clientWidth -
-        parseFloat(computedStyle.paddingRight) -
-        parseFloat(computedStyle.paddingLeft),
-    );
+      parseFloat(computedStyle.paddingRight) -
+      parseFloat(computedStyle.paddingLeft);
+    setWidth(actualWidth > maxWidth ? maxWidth : actualWidth);
   };
 
   useMounted(() => {

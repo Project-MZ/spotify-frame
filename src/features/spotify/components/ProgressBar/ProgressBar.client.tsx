@@ -10,9 +10,9 @@ import { useKonvaContext } from '~/features/konva';
  */
 type Props = RectConfig & {
   /** where to place circle (between 0 to 1) */
-  at: number;
+  progress: number;
   /** text for current point of the music */
-  now: string;
+  nowAt: string;
   /** text for duration of the music */
   duration: string;
   /** font size for duration */
@@ -26,15 +26,16 @@ export const ProgressBar = ({
   x = 0,
   y = 0,
   width = 0,
-  at = 0.33,
-  now,
-  duration,
+  progress = 0.33,
+  nowAt = '',
+  duration = '',
   fontSize = 10,
   ...props
 }: Props): JSX.Element => {
   const { relativeX } = useKonvaContext();
-  const cornerRadius = 9999;
   const durationY = fontSize + relativeX(20);
+  const cornerRadius = 9999;
+  const rigthRadius = progress === 100 ? cornerRadius : 0;
 
   return (
     <Group x={x} y={y}>
@@ -47,13 +48,25 @@ export const ProgressBar = ({
         />
         <Rect
           {...props}
-          width={width * at}
-          cornerRadius={[cornerRadius, 0, 0, cornerRadius]}
+          width={width * progress * 0.01}
+          cornerRadius={[cornerRadius, rigthRadius, rigthRadius, cornerRadius]}
         />
       </Group>
       <Group y={durationY}>
-        <Text width={width} text={now} fontSize={fontSize} align='left' />
-        <Text width={width} text={duration} fontSize={fontSize} align='right' />
+        <Text
+          width={width}
+          text={nowAt}
+          wrap='none'
+          fontSize={fontSize}
+          align='left'
+        />
+        <Text
+          width={width}
+          text={duration}
+          wrap='none'
+          fontSize={fontSize}
+          align='right'
+        />
       </Group>
     </Group>
   );

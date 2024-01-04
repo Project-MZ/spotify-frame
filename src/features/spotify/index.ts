@@ -1,1 +1,1 @@
-export * from './components/SpotifyFrame';
+export * from './components/SpotifyFrameBuilder';

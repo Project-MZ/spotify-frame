@@ -17,6 +17,8 @@ type Props = {
   height?: ImageConfig['height'];
   /** corner radius */
   cornerRadius?: ImageConfig['cornerRadius'];
+  /** fill */
+  fill?: ImageConfig['fill'];
   /** image src */
   src: string;
 };
