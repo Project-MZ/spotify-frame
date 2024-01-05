@@ -24,8 +24,8 @@ type Props = Omit<
   src: string;
   /** title */
   title: string;
-  /** subtitle */
-  subTitle: string;
+  /** artist */
+  artist: string;
   /** progress */
   progress: number;
   /** now at */
@@ -40,7 +40,7 @@ type Props = Omit<
 export const SpotifyFrame = ({
   src,
   title,
-  subTitle,
+  artist,
   progress,
   nowAt,
   duration,
@@ -83,7 +83,7 @@ export const SpotifyFrame = ({
               />
               <Group y={headingFontSize + relativeY(15)}>
                 <Text
-                  text={subTitle}
+                  text={artist}
                   width={fullWidth - iconWidth * 2}
                   wrap='none'
                   fontFamily='Roboto'

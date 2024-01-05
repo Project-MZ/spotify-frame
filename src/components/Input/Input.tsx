@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import type { ComponentPropsWithoutRef } from 'react';
+import styles from './Input.module.css';
 
 /**
  * props for {@link Input}
@@ -14,6 +15,7 @@ export const Input = ({ className, ...props }: Props): JSX.Element => (
     {...props}
     className={classNames(
       'rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-500',
+      styles.input,
       className,
     )}
   />

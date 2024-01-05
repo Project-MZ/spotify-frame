@@ -8,7 +8,7 @@ import {
   type DragEventHandler,
   type MouseEventHandler,
 } from 'react';
-import { FaCameraRetro, FaImage } from 'react-icons/fa6';
+import { FaCameraRetro, FaImage, FaX } from 'react-icons/fa6';
 import { DnDFileInput } from '~/components/DnDFileInput';
 import { Fieldset } from '~/components/Fieldset';
 import { ImageCropper } from '~/components/ImageCropper';
@@ -30,7 +30,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
-  const [subTitle, setSubtitle] = useState('JOHN and JANE');
+  const [artist, setArtist] = useState('JOHN and JANE');
   const [progress, setProgress] = useState(33);
   const [nowAt, setNowAt] = useState(defaultDate);
   const [duration, setDuration] = useState('@HILLSIDE CLUB');
@@ -56,8 +56,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
-  const handleSubtitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSubtitle(e.target.value);
+  const handleArtistChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setArtist(e.target.value);
   };
   const handleProgressChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setProgress(+e.target.value);
@@ -99,19 +99,39 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   };
 
   return (
-    <section className='grid h-full w-full max-w-[960px] grow grid-cols-1 gap-y-32 md:grid-cols-2 md:gap-x-16 lg:gap-x-32'>
-      <div className='flex items-center justify-center'>
+    <section className='grid size-full max-w-[960px] grow grid-cols-1 gap-y-24 md:grid-cols-2 md:gap-x-16 lg:gap-x-32'>
+      <div className='grid place-content-center md:order-2'>
+        <div className='sticky top-48 h-96 w-72'>
+          <KonvaProvider>
+            <SpotifyFrame
+              stageRef={stageRef}
+              src={dataURL}
+              title={title}
+              artist={artist}
+              progress={progress}
+              nowAt={nowAt}
+              duration={duration}
+              onClick={handleDownload}
+            />
+          </KonvaProvider>
+        </div>
+      </div>
+      <div className='flex items-center justify-center md:order-1'>
         <form className='flex w-full flex-col items-stretch space-y-8'>
           <Fieldset>
             <div className='flex justify-between'>
-              <Label htmlFor='imaimagege'>Image</Label>
+              <Label htmlFor='cover'>Cover</Label>
               {src && (
                 <button
                   type='button'
-                  className='text-xs text-blue-500'
+                  className='text-xs'
                   onClick={handleClearFileButtonClick}
                 >
-                  Clear
+                  <FaX
+                    className='size-3 fill-gray-400'
+                    title='clear'
+                    aria-label='clear'
+                  />
                 </button>
               )}
             </div>
@@ -126,10 +146,10 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               </div>
             ) : (
               <DnDFileInput
-                id='image'
+                id='cover'
                 className='flex h-48 flex-col items-center justify-center gap-y-4'
-                name='image'
-                placeholder='Image'
+                name='cover'
+                placeholder='Cover'
                 accept='image/*'
                 value={src}
                 onChange={handleFileChange}
@@ -154,14 +174,14 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
             />
           </Fieldset>
           <Fieldset>
-            <Label htmlFor='subtitle'>Subtitle</Label>
+            <Label htmlFor='artist'>Artist</Label>
             <Input
-              id='subtitle'
+              id='artist'
               type='text'
-              name='subtitle'
-              placeholder='Subtitle'
-              value={subTitle}
-              onChange={handleSubtitleChange}
+              name='artist'
+              placeholder='Artist'
+              value={artist}
+              onChange={handleArtistChange}
             />
           </Fieldset>
           <Fieldset>
@@ -176,45 +196,31 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               onChange={handleProgressChange}
             />
           </Fieldset>
-          <Fieldset>
-            <Label htmlFor='nowAt'>Now at</Label>
-            <Input
-              id='nowAt'
-              type='text'
-              name='nowAt'
-              placeholder='Now at'
-              value={nowAt}
-              onChange={handleNowAtChange}
-            />
-          </Fieldset>
-          <Fieldset>
-            <Label htmlFor='duration'>Duration</Label>
-            <Input
-              id='duration'
-              type='text'
-              name='duration'
-              placeholder='Duration'
-              value={duration}
-              onChange={handleDurationChange}
-            />
-          </Fieldset>
+          <div className='flex flex-col justify-between gap-y-8 md:flex-row md:gap-x-4'>
+            <Fieldset className='min-w-0 grow'>
+              <Label htmlFor='nowAt'>Now at</Label>
+              <Input
+                id='nowAt'
+                type='text'
+                name='nowAt'
+                placeholder='Now at'
+                value={nowAt}
+                onChange={handleNowAtChange}
+              />
+            </Fieldset>
+            <Fieldset className='min-w-0 grow'>
+              <Label htmlFor='duration'>Duration</Label>
+              <Input
+                id='duration'
+                type='text'
+                name='duration'
+                placeholder='Duration'
+                value={duration}
+                onChange={handleDurationChange}
+              />
+            </Fieldset>
+          </div>
         </form>
-      </div>
-      <div className='grid place-content-center'>
-        <div className='sticky top-16 h-96 w-72'>
-          <KonvaProvider>
-            <SpotifyFrame
-              stageRef={stageRef}
-              src={dataURL}
-              title={title}
-              subTitle={subTitle}
-              progress={progress}
-              nowAt={nowAt}
-              duration={duration}
-              onClick={handleDownload}
-            />
-          </KonvaProvider>
-        </div>
       </div>
       <button
         type='button'

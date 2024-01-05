@@ -1,0 +1,3 @@
+.stage canvas {
+  @apply cursor-pointer rounded-md shadow-md;
+}

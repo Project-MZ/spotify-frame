@@ -1,5 +1,6 @@
 'use client';
 
+import classNames from 'classnames';
 import { type Stage as IStage } from 'konva/lib/Stage';
 import {
   useEffect,
@@ -12,6 +13,7 @@ import type { StageProps } from 'react-konva';
 import { Stage } from 'react-konva';
 import { useKonvaContext } from '~/features/konva';
 import { useMounted } from '~/hooks/useMounted';
+import styles from './FullWidthStage.module.css';
 
 /**
  * props for {@link FullWidthStage}
@@ -38,6 +40,7 @@ type Props = {
  */
 export const FullWidthStage = ({
   stageRef,
+  className,
   children,
   base,
   aspectRatio,
@@ -91,6 +94,7 @@ export const FullWidthStage = ({
       <Stage
         {...props}
         ref={stageRef}
+        className={classNames(styles.stage, className)}
         width={width}
         height={height}
         onClick={onClick}
