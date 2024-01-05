@@ -4611,6 +4611,11 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-image-crop@^11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-11.0.4.tgz#044a34467fd52fde5cb03907cfb156e131cc798d"
+  integrity sha512-FO6N0oJIs+T/kw9wHZ1sjLYURUBv7BOKamjwkiQ0lI4D2Vp5OZFDNhrSJW41K0V9oCsbHtEymbOT/8eF28OOhg==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

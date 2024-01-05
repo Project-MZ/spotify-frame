@@ -1,8 +1,14 @@
 'use client';
 
-import type { ChangeEventHandler } from 'react';
+import type {
+  ChangeEventHandler,
+  DragEventHandler,
+  MouseEventHandler,
+} from 'react';
 import { useState } from 'react';
+import { DnDFileInput } from '~/components/DnDFileInput';
 import { Fieldset } from '~/components/Fieldset';
+import { ImageCropper } from '~/components/ImageCropper';
 import { Input } from '~/components/Input';
 import { Label } from '~/components/Label';
 import { SpotifyFrame } from '../SpotifyFrame';
@@ -16,12 +22,30 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     now.getDate(),
   ).padStart(2, '0')}.${now.getFullYear()}`;
   const [src, setSrc] = useState('');
+  const [dataURL, setCroppedDataURL] = useState('');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
   const [subTitle, setSubtitle] = useState('JOHN and JANE');
   const [progress, setProgress] = useState(33);
   const [nowAt, setNowAt] = useState(defaultDate);
-  const [duration, setDuration] = useState('HILLSIDE CLUB');
+  const [duration, setDuration] = useState('@HILLSIDE CLUB');
 
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    URL.revokeObjectURL(src);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSrc(URL.createObjectURL(file));
+  };
+  const handleFileDrop: DragEventHandler<HTMLButtonElement> = (e) => {
+    URL.revokeObjectURL(src);
+    const file = e.dataTransfer.files[0];
+    setSrc(URL.createObjectURL(file));
+  };
+  const handleClearFileButtonClick: MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
+    URL.revokeObjectURL(src);
+    setSrc('');
+  };
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
@@ -42,6 +66,45 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     <section className='grid h-full w-full max-w-[960px] grow grid-cols-1 gap-y-32 md:grid-cols-2 md:gap-x-16 lg:gap-x-32'>
       <div className='flex items-center justify-center'>
         <form className='flex w-full flex-col items-stretch space-y-8'>
+          <Fieldset>
+            <div className='flex justify-between'>
+              <Label htmlFor='imaimagege'>Image</Label>
+              {src && (
+                <button
+                  type='button'
+                  className='text-xs text-blue-500'
+                  onClick={handleClearFileButtonClick}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            {src ? (
+              <div className='grid place-content-center'>
+                <ImageCropper
+                  src={src}
+                  className='h-48'
+                  aspect={1}
+                  onCrop={setCroppedDataURL}
+                />
+              </div>
+            ) : (
+              <DnDFileInput
+                id='image'
+                className='h-48'
+                name='image'
+                placeholder='Image'
+                accept='image/*'
+                value={src}
+                onChange={handleFileChange}
+                onDrop={handleFileDrop}
+              >
+                <span className='text-xs text-gray-400'>
+                  Upload or drag and drop a image
+                </span>
+              </DnDFileInput>
+            )}
+          </Fieldset>
           <Fieldset>
             <Label htmlFor='title'>Title</Label>
             <Input
@@ -77,7 +140,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
             />
           </Fieldset>
           <Fieldset>
-            <Label htmlFor='nowAt'>Now At</Label>
+            <Label htmlFor='nowAt'>Now at</Label>
             <Input
               id='nowAt'
               type='text'
@@ -102,7 +165,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
       </div>
       <div className='grid place-content-center'>
         <SpotifyFrame
-          src={src}
+          src={dataURL}
           title={title}
           subTitle={subTitle}
           progress={progress}

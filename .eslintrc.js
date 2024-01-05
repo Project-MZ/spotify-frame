@@ -95,6 +95,7 @@ module.exports = {
           },
         ],
 
+        // custom input
         'jsx-a11y/label-has-associated-control': [
           2,
           {
@@ -102,6 +103,9 @@ module.exports = {
             controlComponents: ['Input'],
           },
         ],
+
+        // allow img tag
+        '@next/next/no-img-element': 'off',
       },
     },
 
