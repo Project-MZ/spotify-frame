@@ -8,6 +8,7 @@ import {
   type DragEventHandler,
   type MouseEventHandler,
 } from 'react';
+import { FaCameraRetro, FaImage } from 'react-icons/fa6';
 import { DnDFileInput } from '~/components/DnDFileInput';
 import { Fieldset } from '~/components/Fieldset';
 import { ImageCropper } from '~/components/ImageCropper';
@@ -67,7 +68,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const handleDurationChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDuration(e.target.value);
   };
-  const handleDownload: MouseEventHandler<HTMLButtonElement> = async () => {
+  const handleDownload = async (): Promise<void> => {
     const stage = stageRef.current;
     if (!stage) return;
     const canvas = stage.content.querySelector('canvas');
@@ -126,7 +127,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
             ) : (
               <DnDFileInput
                 id='image'
-                className='h-48'
+                className='flex h-48 flex-col items-center justify-center gap-y-4'
                 name='image'
                 placeholder='Image'
                 accept='image/*'
@@ -134,6 +135,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
                 onChange={handleFileChange}
                 onDrop={handleFileDrop}
               >
+                <FaImage className='block size-8 fill-gray-200' />
                 <span className='text-xs text-gray-400'>
                   Upload or drag and drop a image
                 </span>
@@ -209,16 +211,21 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               progress={progress}
               nowAt={nowAt}
               duration={duration}
+              onClick={handleDownload}
             />
           </KonvaProvider>
         </div>
       </div>
       <button
         type='button'
-        className='fixed bottom-8 right-8'
+        className='fixed bottom-8 right-8 rounded-full bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-6 shadow-md'
         onClick={handleDownload}
       >
-        Download
+        <FaCameraRetro
+          className='size-6 fill-white'
+          title='download'
+          aria-label='download'
+        />
       </button>
     </section>
   );

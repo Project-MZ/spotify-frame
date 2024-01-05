@@ -1,7 +1,6 @@
 'use client';
 
-import { type Stage } from 'konva/lib/Stage';
-import { type RefObject } from 'react';
+import { type ComponentPropsWithoutRef } from 'react';
 import { Layer, Group, Rect, Text } from 'react-konva';
 import {
   useKonvaContext,
@@ -17,9 +16,10 @@ import { Share } from '../Share';
 /**
  * props for {@link SpotifyFrame}
  */
-type Props = {
-  /** ref to {@link  Stage} */
-  stageRef: RefObject<Stage>;
+type Props = Omit<
+  ComponentPropsWithoutRef<typeof FullWidthStage>,
+  'base' | 'aspectRatio'
+> & {
   /** image src */
   src: string;
   /** title */
@@ -38,13 +38,13 @@ type Props = {
  * spotify frame
  */
 export const SpotifyFrame = ({
-  stageRef,
   src,
   title,
   subTitle,
   progress,
   nowAt,
   duration,
+  ...props
 }: Props): JSX.Element => {
   const { relativeX, relativeY } = useKonvaContext();
   const base = 1000;
@@ -58,12 +58,7 @@ export const SpotifyFrame = ({
   const iconWidth = relativeX(25);
 
   return (
-    <FullWidthStage
-      stageRef={stageRef}
-      base={base}
-      aspectRatio={3 / 4}
-      maxWidth={400}
-    >
+    <FullWidthStage {...props} base={base} aspectRatio={3 / 4} maxWidth={400}>
       <Layer>
         <Rect width={width} height={height} fill='#ffffff' />
         <Group x={padding}>

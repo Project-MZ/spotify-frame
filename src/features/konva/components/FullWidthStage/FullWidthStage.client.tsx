@@ -8,6 +8,7 @@ import {
   type ReactNode,
   type RefObject,
 } from 'react';
+import type { StageProps } from 'react-konva';
 import { Stage } from 'react-konva';
 import { useKonvaContext } from '~/features/konva';
 import { useMounted } from '~/hooks/useMounted';
@@ -28,6 +29,8 @@ type Props = {
   aspectRatio: number;
   /** max width */
   maxWidth?: number;
+  /** click event handler */
+  onClick?: StageProps['onClick'];
 };
 
 /**
@@ -39,6 +42,7 @@ export const FullWidthStage = ({
   base,
   aspectRatio,
   maxWidth = Infinity,
+  onClick,
   ...props
 }: Props): JSX.Element => {
   /** ref to div to calc real width and height of canvas element */
@@ -84,7 +88,13 @@ export const FullWidthStage = ({
   ) : (
     <>
       {sizeGetter}
-      <Stage {...props} ref={stageRef} width={width} height={height}>
+      <Stage
+        {...props}
+        ref={stageRef}
+        width={width}
+        height={height}
+        onClick={onClick}
+      >
         {children}
       </Stage>
     </>

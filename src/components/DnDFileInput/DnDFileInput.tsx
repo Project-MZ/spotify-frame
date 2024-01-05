@@ -57,7 +57,7 @@ export const DnDFileInput = ({
       type='button'
       ref={dndAreaRef}
       className={classNames(
-        'grid cursor-pointer place-content-center rounded-md border border-dashed',
+        'cursor-pointer rounded-md border border-dashed',
         isOver && 'bg-gray-100',
         className,
       )}
