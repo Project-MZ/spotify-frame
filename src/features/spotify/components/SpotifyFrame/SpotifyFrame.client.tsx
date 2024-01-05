@@ -1,14 +1,14 @@
 'use client';
 
+import { type Stage } from 'konva/lib/Stage';
+import { type RefObject } from 'react';
 import { Layer, Group, Rect, Text } from 'react-konva';
 import {
   useKonvaContext,
-  KonvaProvider,
   FullWidthStage,
   Image,
   Heart,
 } from '~/features/konva';
-import { composeProviders } from '~/utils/hoc';
 import { Controls } from '../Controls';
 import { ProgressBar } from '../ProgressBar';
 import { Repeat } from '../Repeat';
@@ -18,6 +18,8 @@ import { Share } from '../Share';
  * props for {@link SpotifyFrame}
  */
 type Props = {
+  /** ref to {@link  Stage} */
+  stageRef: RefObject<Stage>;
   /** image src */
   src: string;
   /** title */
@@ -35,7 +37,8 @@ type Props = {
 /**
  * spotify frame
  */
-export const SpotifyFrame = composeProviders(KonvaProvider)(({
+export const SpotifyFrame = ({
+  stageRef,
   src,
   title,
   subTitle,
@@ -55,7 +58,12 @@ export const SpotifyFrame = composeProviders(KonvaProvider)(({
   const iconWidth = relativeX(25);
 
   return (
-    <FullWidthStage base={base} aspectRatio={3 / 4} maxWidth={400}>
+    <FullWidthStage
+      stageRef={stageRef}
+      base={base}
+      aspectRatio={3 / 4}
+      maxWidth={400}
+    >
       <Layer>
         <Rect width={width} height={height} fill='#ffffff' />
         <Group x={padding}>
@@ -125,4 +133,4 @@ export const SpotifyFrame = composeProviders(KonvaProvider)(({
       </Layer>
     </FullWidthStage>
   );
-});
+};

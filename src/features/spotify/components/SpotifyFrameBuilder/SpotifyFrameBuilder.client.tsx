@@ -1,16 +1,20 @@
 'use client';
 
-import type {
-  ChangeEventHandler,
-  DragEventHandler,
-  MouseEventHandler,
+import { type Stage } from 'konva/lib/Stage';
+import {
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type DragEventHandler,
+  type MouseEventHandler,
 } from 'react';
-import { useState } from 'react';
 import { DnDFileInput } from '~/components/DnDFileInput';
 import { Fieldset } from '~/components/Fieldset';
 import { ImageCropper } from '~/components/ImageCropper';
 import { Input } from '~/components/Input';
 import { Label } from '~/components/Label';
+import { KonvaProvider } from '~/features/konva';
+import { downloadURI } from '~/utils/download';
 import { SpotifyFrame } from '../SpotifyFrame';
 
 /**
@@ -21,6 +25,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const defaultDate = `${String(now.getMonth() + 1).padStart(2, '0')}.${String(
     now.getDate(),
   ).padStart(2, '0')}.${now.getFullYear()}`;
+  const stageRef = useRef<Stage>(null);
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
@@ -45,6 +50,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   > = () => {
     URL.revokeObjectURL(src);
     setSrc('');
+    setCroppedDataURL('');
   };
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -60,6 +66,35 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   };
   const handleDurationChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDuration(e.target.value);
+  };
+  const handleDownload: MouseEventHandler<HTMLButtonElement> = async () => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const canvas = stage.content.querySelector('canvas');
+    if (!canvas) return;
+
+    const offscreen = new OffscreenCanvas(960, 1280);
+    const ctx = offscreen.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(
+      canvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      offscreen.width,
+      offscreen.height,
+    );
+
+    const blob = await offscreen.convertToBlob({
+      type: 'image/png',
+    });
+    const objectURL = URL.createObjectURL(blob);
+    const timestamp = Date.now();
+    downloadURI(objectURL, `spotify-framed-${timestamp}.png`);
+    URL.revokeObjectURL(objectURL);
   };
 
   return (
@@ -164,15 +199,27 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
         </form>
       </div>
       <div className='grid place-content-center'>
-        <SpotifyFrame
-          src={dataURL}
-          title={title}
-          subTitle={subTitle}
-          progress={progress}
-          nowAt={nowAt}
-          duration={duration}
-        />
+        <div className='sticky top-16 h-96 w-72'>
+          <KonvaProvider>
+            <SpotifyFrame
+              stageRef={stageRef}
+              src={dataURL}
+              title={title}
+              subTitle={subTitle}
+              progress={progress}
+              nowAt={nowAt}
+              duration={duration}
+            />
+          </KonvaProvider>
+        </div>
       </div>
+      <button
+        type='button'
+        className='fixed bottom-8 right-8'
+        onClick={handleDownload}
+      >
+        Download
+      </button>
     </section>
   );
 };

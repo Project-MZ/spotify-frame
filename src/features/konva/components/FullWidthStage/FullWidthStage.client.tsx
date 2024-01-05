@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { type Stage as IStage } from 'konva/lib/Stage';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import { Stage } from 'react-konva';
 import { useKonvaContext } from '~/features/konva';
 import { useMounted } from '~/hooks/useMounted';
@@ -9,6 +16,8 @@ import { useMounted } from '~/hooks/useMounted';
  * props for {@link FullWidthStage}
  */
 type Props = {
+  /** ref to {@link IStage | Stage} */
+  stageRef: RefObject<IStage>;
   /** className */
   className?: string;
   /** children */
@@ -25,6 +34,7 @@ type Props = {
  * {@link Stage} that resize automatically
  */
 export const FullWidthStage = ({
+  stageRef,
   children,
   base,
   aspectRatio,
@@ -32,7 +42,7 @@ export const FullWidthStage = ({
   ...props
 }: Props): JSX.Element => {
   /** ref to div to calc real width and height of canvas element */
-  const ref = useRef<HTMLDivElement>(null);
+  const sizeGetterRef = useRef<HTMLDivElement>(null);
   const { setScale } = useKonvaContext();
   const [width, setWidth] = useState(0);
   const height = width / aspectRatio;
@@ -41,7 +51,7 @@ export const FullWidthStage = ({
    * resize Stage based on window size
    */
   const resizeStage = (): void => {
-    const parent = ref.current?.parentElement;
+    const parent = sizeGetterRef.current?.parentElement;
     if (!parent) return;
     const computedStyle = getComputedStyle(parent);
     const actualWidth =
@@ -67,14 +77,14 @@ export const FullWidthStage = ({
     });
   }, [width, aspectRatio, base, setScale]);
 
-  const sizeGetter = <div ref={ref} aria-hidden />;
+  const sizeGetter = <div ref={sizeGetterRef} aria-hidden />;
 
   return width === 0 ? (
     sizeGetter
   ) : (
     <>
       {sizeGetter}
-      <Stage {...props} width={width} height={height}>
+      <Stage {...props} ref={stageRef} width={width} height={height}>
         {children}
       </Stage>
     </>
