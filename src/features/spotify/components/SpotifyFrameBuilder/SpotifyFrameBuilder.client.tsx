@@ -224,7 +224,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
       </div>
       <button
         type='button'
-        className='fixed bottom-8 right-8 rounded-full bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-6 shadow-md'
+        className='fixed bottom-8 right-8 rounded-full bg-gradient-to-br from-[#1DB954] to-[#191414] p-6 shadow-md'
         onClick={handleDownload}
       >
         <FaCameraRetro
