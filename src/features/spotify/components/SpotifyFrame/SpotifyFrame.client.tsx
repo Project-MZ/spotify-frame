@@ -22,12 +22,8 @@ type Props = Omit<
 > & {
   /** image src */
   src: string;
-  /** background color */
-  backgroundColor: string;
-  /** text color */
-  textColor: string;
-  /** secondary color */
-  secondaryColor: string;
+  /** whether using dark theme */
+  darkTheme: boolean;
   /** title */
   title: string;
   /** artist */
@@ -49,9 +45,7 @@ type Props = Omit<
  */
 export const SpotifyFrame = ({
   src,
-  backgroundColor,
-  textColor,
-  secondaryColor,
+  darkTheme,
   title,
   artist,
   liked = false,
@@ -71,6 +65,11 @@ export const SpotifyFrame = ({
   const imageWidth = fullWidth - imageMargin * 2;
   const headingFontSize = relativeX(50);
   const iconWidth = relativeX(25);
+  const backgroundColor = darkTheme ? '#121212' : '#FFFFFF';
+  const textColor = darkTheme ? '#FFFFFF' : '#121212';
+  const placeholderColor = darkTheme
+    ? 'rgb(55 65 81)' // gray-700
+    : 'rgb(229 231 235)'; // gray-200
 
   return (
     <FullWidthStage {...props} base={base} aspectRatio={3 / 4} maxWidth={400}>
@@ -84,7 +83,7 @@ export const SpotifyFrame = ({
             width={imageWidth}
             height={imageWidth}
             cornerRadius={5}
-            fill={secondaryColor}
+            fill={placeholderColor}
           />
           <Group y={relativeY(625)}>
             <Group>
@@ -105,7 +104,7 @@ export const SpotifyFrame = ({
                   fontFamily='Roboto'
                   fontSize={headingFontSize * 0.5}
                   fontStyle='400'
-                  fill={secondaryColor}
+                  fill='rgb(156 163 175)' // gray-400
                 />
                 <Heart
                   x={fullWidth - iconWidth * 2}
@@ -121,7 +120,7 @@ export const SpotifyFrame = ({
                 width={fullWidth}
                 height={relativeY(5)}
                 fill={textColor}
-                backgroundColor={secondaryColor}
+                backgroundColor={placeholderColor}
                 textColor={textColor}
                 nowAt={nowAt}
                 duration={duration}
