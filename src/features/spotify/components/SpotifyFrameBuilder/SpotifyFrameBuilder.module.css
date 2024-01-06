@@ -1,0 +1,12 @@
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.preview-container {
+  top: calc((100% - theme(height.96)) / 2);
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import classNames from 'classnames';
 import { type Stage } from 'konva/lib/Stage';
 import {
   useRef,
@@ -17,6 +18,7 @@ import { Label } from '~/components/Label';
 import { KonvaProvider } from '~/features/konva';
 import { downloadURI } from '~/utils/download';
 import { SpotifyFrame } from '../SpotifyFrame';
+import styles from './SpotifyFrameBuilder.module.css';
 
 /**
  * spotify frame builder
@@ -99,9 +101,19 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   };
 
   return (
-    <section className='grid size-full max-w-[960px] grow grid-cols-1 gap-y-24 md:grid-cols-2 md:gap-x-16 lg:gap-x-32'>
-      <div className='grid place-content-center md:order-2'>
-        <div className='sticky top-48 h-96 w-72'>
+    <section
+      className={classNames(
+        'flex size-full grow snap-x snap-mandatory overflow-x-auto overflow-y-hidden lg:flex-row-reverse lg:justify-evenly lg:overflow-x-visible lg:overflow-y-visible',
+        styles['no-scrollbar'],
+      )}
+    >
+      <div className='relative grid h-screen shrink-0 basis-full snap-center place-content-center p-8 lg:h-auto lg:basis-auto lg:p-0'>
+        <div
+          className={classNames(
+            'sticky h-96 w-72',
+            styles['preview-container'],
+          )}
+        >
           <KonvaProvider>
             <SpotifyFrame
               stageRef={stageRef}
@@ -116,8 +128,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
           </KonvaProvider>
         </div>
       </div>
-      <div className='flex items-center justify-center md:order-1'>
-        <form className='flex w-full flex-col items-stretch space-y-8'>
+      <div className='relative flex h-screen shrink-0 basis-full snap-center items-center justify-center overflow-y-auto lg:h-auto lg:basis-auto lg:overflow-y-visible'>
+        <form className='absolute top-0 flex w-full max-w-[480px] flex-col items-stretch space-y-8 p-8 lg:static lg:inset-auto'>
           <Fieldset>
             <div className='flex justify-between'>
               <Label htmlFor='cover'>Cover</Label>
