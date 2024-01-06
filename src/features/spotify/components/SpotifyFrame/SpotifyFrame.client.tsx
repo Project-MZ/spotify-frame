@@ -61,8 +61,6 @@ export const SpotifyFrame = ({
   const height = relativeY(base);
   const padding = relativeX(100);
   const fullWidth = width - padding * 2;
-  const imageMargin = relativeX(75);
-  const imageWidth = fullWidth - imageMargin * 2;
   const headingFontSize = relativeX(50);
   const iconWidth = relativeX(25);
   const backgroundColor = darkTheme ? '#121212' : '#FFFFFF';
@@ -72,20 +70,19 @@ export const SpotifyFrame = ({
     : 'rgb(229 231 235)'; // gray-200
 
   return (
-    <FullWidthStage {...props} base={base} aspectRatio={3 / 4} maxWidth={400}>
+    <FullWidthStage {...props} base={base} aspectRatio={2 / 3} maxWidth={400}>
       <Layer>
         <Rect width={width} height={height} fill={backgroundColor} />
         <Group x={padding}>
           <Image
             src={src}
-            x={imageMargin}
             y={padding}
-            width={imageWidth}
-            height={imageWidth}
+            width={fullWidth}
+            height={fullWidth}
             cornerRadius={5}
             fill={placeholderColor}
           />
-          <Group y={relativeY(625)}>
+          <Group y={relativeY(645)}>
             <Group>
               <Text
                 text={title}
@@ -102,7 +99,7 @@ export const SpotifyFrame = ({
                   width={fullWidth - iconWidth * 2}
                   wrap='none'
                   fontFamily='Roboto'
-                  fontSize={headingFontSize * 0.5}
+                  fontSize={headingFontSize * 0.6}
                   fontStyle='400'
                   fill='rgb(156 163 175)' // gray-400
                 />
@@ -110,8 +107,8 @@ export const SpotifyFrame = ({
                   x={fullWidth - iconWidth * 2}
                   y={(iconWidth - headingFontSize) / 2}
                   width={iconWidth}
-                  stroke={textColor}
-                  fill={liked ? textColor : undefined}
+                  stroke={liked ? 'rgb(244 114 182)' : textColor} // text-pink-400
+                  fill={liked ? 'rgb(244 114 182)' : undefined} // text-pink-400
                 />
               </Group>
             </Group>
@@ -125,12 +122,12 @@ export const SpotifyFrame = ({
                 nowAt={nowAt}
                 duration={duration}
                 progress={progress}
-                fontSize={relativeX(20)}
+                fontSize={relativeX(25)}
               />
               <Controls
                 x={fullWidth * 0.5}
-                y={relativeY(100)}
-                radius={relativeX(50)}
+                y={relativeY(105)}
+                radius={relativeX(60)}
                 playing={playing}
                 buttonColor={textColor}
                 textColor={backgroundColor}

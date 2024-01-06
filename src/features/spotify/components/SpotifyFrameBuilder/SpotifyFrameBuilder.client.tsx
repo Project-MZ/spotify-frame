@@ -245,44 +245,46 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               onChange={handleArtistChange}
             />
           </Fieldset>
-          <Fieldset>
-            <Label htmlFor='liked'>Liked</Label>
-            <Switch
-              id='liked'
-              checked={liked}
-              onChange={setLiked}
-              className={`${
-                liked ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>Set whether to like the song</span>
-              <span
+          <div className='flex justify-between gap-x-4'>
+            <Fieldset className='basis-full'>
+              <Label htmlFor='liked'>Liked</Label>
+              <Switch
+                id='liked'
+                checked={liked}
+                onChange={setLiked}
                 className={`${
-                  liked ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
-          </Fieldset>
-          <Fieldset>
-            <Label htmlFor='playing'>Playing</Label>
-            <Switch
-              id='playing'
-              checked={playing}
-              onChange={setPlaying}
-              className={`${
-                playing ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>
-                Set whether the song is being played
-              </span>
-              <span
+                  liked ? 'bg-spotify-green' : 'bg-gray-200'
+                } relative inline-flex h-6 w-11 items-center rounded-full`}
+              >
+                <span className='sr-only'>Set whether to like the song</span>
+                <span
+                  className={`${
+                    liked ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            </Fieldset>
+            <Fieldset className='basis-full'>
+              <Label htmlFor='playing'>Playing</Label>
+              <Switch
+                id='playing'
+                checked={playing}
+                onChange={setPlaying}
                 className={`${
-                  playing ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
-          </Fieldset>
+                  playing ? 'bg-spotify-green' : 'bg-gray-200'
+                } relative inline-flex h-6 w-11 items-center rounded-full`}
+              >
+                <span className='sr-only'>
+                  Set whether the song is being played
+                </span>
+                <span
+                  className={`${
+                    playing ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            </Fieldset>
+          </div>
           <Fieldset>
             <Label htmlFor='progress'>Progress</Label>
             <Input
