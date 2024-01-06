@@ -1,5 +1,6 @@
-.input[type='range'] {
+.input {
   width: 100%;
+  padding: calc(var(--track-border-radius) + var(--track-height) * 0.5) 0;
   background: transparent;
   outline: none;
   cursor: pointer;
@@ -12,14 +13,14 @@
 }
 
 /* Track: Chrome, Safari, Opera, Edge Chromium */
-.input[type='range']::-webkit-slider-runnable-track {
+.input::-webkit-slider-runnable-track {
   height: var(--track-height);
   border-radius: var(--track-border-radius);
   @apply bg-gray-100;
 }
 
 /* Thumb: Chrome, Safari, Opera, Edge Chromium */
-.input[type='range']::-webkit-slider-thumb {
+.input::-webkit-slider-thumb {
   width: var(--track-thumb-size);
   height: var(--track-thumb-size);
   margin-top: calc(-1 * (var(--track-thumb-size) - var(--track-height)) / 2);
@@ -29,14 +30,14 @@
 }
 
 /* Track: Firefox */
-.input[type='range']::-moz-range-track {
+.input::-moz-range-track {
   height: var(--track-height);
   border-radius: var(--track-border-radius);
   @apply bg-gray-100;
 }
 
 /* Thumb: Firefox */
-.input[type='range']::-moz-range-thumb {
+.input::-moz-range-thumb {
   width: var(--track-thumb-size);
   height: var(--track-thumb-size);
   border: none;

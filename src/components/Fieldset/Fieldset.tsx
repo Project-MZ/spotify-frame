@@ -4,14 +4,25 @@ import type { ComponentPropsWithoutRef } from 'react';
 /**
  * props for {@link Fieldset}
  */
-type Props = ComponentPropsWithoutRef<'fieldset'>;
+type Props = ComponentPropsWithoutRef<'fieldset'> & {
+  /** whether to place label and input horizontally */
+  horizontal?: boolean;
+};
 
 /**
  * label
  */
-export const Fieldset = ({ className, ...props }: Props): JSX.Element => (
+export const Fieldset = ({
+  className,
+  horizontal = false,
+  ...props
+}: Props): JSX.Element => (
   <fieldset
     {...props}
-    className={classNames('flex flex-col space-y-2', className)}
+    className={classNames(
+      'flex',
+      !horizontal && 'flex-col space-y-2',
+      className,
+    )}
   />
 );
