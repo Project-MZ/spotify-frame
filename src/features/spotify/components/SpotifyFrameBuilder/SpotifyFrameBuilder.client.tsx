@@ -1,5 +1,6 @@
 'use client';
 
+import { Switch } from '@headlessui/react';
 import classNames from 'classnames';
 import { type Stage } from 'konva/lib/Stage';
 import {
@@ -35,6 +36,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [dataURL, setCroppedDataURL] = useState('');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
   const [artist, setArtist] = useState('JOHN and JANE');
+  const [liked, setLiked] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(33);
   const [nowAt, setNowAt] = useState(defaultDate);
   const [duration, setDuration] = useState('@HILLSIDE CLUB');
@@ -87,7 +90,10 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     const canvas = stage.content.querySelector('canvas');
     if (!canvas) return;
 
-    const offscreen = new OffscreenCanvas(960, 1280);
+    const aspectRatio = canvas.height / canvas.width;
+    const witdh = 1000;
+    const height = witdh * aspectRatio;
+    const offscreen = new OffscreenCanvas(witdh, height);
     const ctx = offscreen.getContext('2d');
     if (!ctx) return;
     ctx.drawImage(
@@ -131,6 +137,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               src={dataURL}
               title={title}
               artist={artist}
+              liked={liked}
+              playing={playing}
               progress={progress}
               nowAt={nowAt}
               duration={duration}
@@ -140,7 +148,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
         </div>
         <button
           type='button'
-          className='absolute bottom-8 right-8 rounded-full bg-gradient-to-br from-[#1DB954] to-[#191414] p-6 shadow-md lg:fixed'
+          className='absolute bottom-8 right-8 rounded-full bg-gradient-to-br from-spotify-green to-spotify-black p-6 shadow-md lg:fixed'
           onClick={handleDownload}
         >
           <FaCameraRetro
@@ -217,6 +225,44 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               value={artist}
               onChange={handleArtistChange}
             />
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='liked'>Liked</Label>
+            <Switch
+              id='liked'
+              checked={liked}
+              onChange={setLiked}
+              className={`${
+                liked ? 'bg-spotify-green' : 'bg-gray-200'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className='sr-only'>Set whether to like the song</span>
+              <span
+                className={`${
+                  liked ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='playing'>Playing</Label>
+            <Switch
+              id='playing'
+              checked={playing}
+              onChange={setPlaying}
+              className={`${
+                playing ? 'bg-spotify-green' : 'bg-gray-200'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className='sr-only'>
+                Set whether the song is being played
+              </span>
+              <span
+                className={`${
+                  playing ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
           </Fieldset>
           <Fieldset>
             <Label htmlFor='progress'>Progress</Label>

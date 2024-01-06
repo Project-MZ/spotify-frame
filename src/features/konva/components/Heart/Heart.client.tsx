@@ -15,6 +15,8 @@ type Props = {
   width?: ShapeConfig['width'];
   /** fill */
   fill?: ShapeConfig['fill'];
+  /** stroke */
+  stroke?: ShapeConfig['stroke'];
 };
 
 /**
@@ -25,8 +27,9 @@ type Props = {
 export const Heart = ({ ...props }: Props): JSX.Element => (
   <Shape
     {...props}
+    strokeWidth={60}
     sceneFunc={(context, shape) => {
-      const width = shape.getAttr('width') as number;
+      const width = shape.width();
       const scale = 0.1 * width * (16 / 512);
 
       context.miterLimit = 4;

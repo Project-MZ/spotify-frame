@@ -26,6 +26,10 @@ type Props = Omit<
   title: string;
   /** artist */
   artist: string;
+  /** whether the song is liked */
+  liked: boolean;
+  /** whether the song is being played */
+  playing: boolean;
   /** progress */
   progress: number;
   /** now at */
@@ -41,6 +45,8 @@ export const SpotifyFrame = ({
   src,
   title,
   artist,
+  liked = false,
+  playing = false,
   progress,
   nowAt,
   duration,
@@ -95,7 +101,8 @@ export const SpotifyFrame = ({
                   x={fullWidth - iconWidth * 2}
                   y={(iconWidth - headingFontSize) / 2}
                   width={iconWidth}
-                  fill='rgb(244 114 182)' // text-pink-400
+                  stroke={liked ? 'rgb(244 114 182)' : '#000000'} // text-pink-400
+                  fill={liked ? 'rgb(244 114 182)' : undefined} // text-pink-400
                 />
               </Group>
             </Group>
@@ -113,6 +120,7 @@ export const SpotifyFrame = ({
                 x={fullWidth * 0.5}
                 y={relativeY(100)}
                 radius={relativeX(50)}
+                playing={playing}
               />
               <Group y={relativeY(175)}>
                 <Repeat width={iconWidth} fill='#000000' />

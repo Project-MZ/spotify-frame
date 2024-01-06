@@ -10,7 +10,11 @@ import { PlayButton } from '../PlayButton';
 /**
  * props for {@link Controls}
  */
-type Props = CircleConfig & GroupPosition;
+type Props = CircleConfig &
+  GroupPosition & {
+    /** whether the song is being played */
+    playing: boolean;
+  };
 
 /**
  * spotify controls
@@ -19,6 +23,7 @@ export const Controls = ({
   x,
   y,
   radius = 0,
+  playing = false,
   ...props
 }: Props): JSX.Element => {
   const { relativeX } = useKonvaContext();
@@ -29,7 +34,7 @@ export const Controls = ({
   return (
     <Group x={x} y={y}>
       <NavButton x={-space} type='prev' side={navSide} />
-      <PlayButton {...props} radius={radius} />
+      <PlayButton {...props} radius={radius} playing={playing} />
       <NavButton x={space} type='next' side={navSide} />
     </Group>
   );
