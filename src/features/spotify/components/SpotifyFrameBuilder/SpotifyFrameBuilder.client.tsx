@@ -9,13 +9,14 @@ import {
   type DragEventHandler,
   type MouseEventHandler,
 } from 'react';
-import { FaCameraRetro, FaImage, FaX } from 'react-icons/fa6';
+import { FaCameraRetro, FaImage, FaX, FaArrowRightLong } from 'react-icons/fa6';
 import { DnDFileInput } from '~/components/DnDFileInput';
 import { Fieldset } from '~/components/Fieldset';
 import { ImageCropper } from '~/components/ImageCropper';
 import { Input } from '~/components/Input';
 import { Label } from '~/components/Label';
 import { KonvaProvider } from '~/features/konva';
+import { useMounted } from '~/hooks/useMounted';
 import { downloadURI } from '~/utils/download';
 import { SpotifyFrame } from '../SpotifyFrame';
 import styles from './SpotifyFrameBuilder.module.css';
@@ -29,6 +30,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     now.getDate(),
   ).padStart(2, '0')}.${now.getFullYear()}`;
   const stageRef = useRef<Stage>(null);
+  const [showTutorail, setShowTutorial] = useState(true);
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
@@ -36,6 +38,15 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [progress, setProgress] = useState(33);
   const [nowAt, setNowAt] = useState(defaultDate);
   const [duration, setDuration] = useState('@HILLSIDE CLUB');
+
+  useMounted(() => {
+    const timer = setTimeout(() => {
+      setShowTutorial(false);
+    }, 2500);
+    return () => {
+      clearTimeout(timer);
+    };
+  });
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     URL.revokeObjectURL(src);
@@ -127,6 +138,17 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
             />
           </KonvaProvider>
         </div>
+        <button
+          type='button'
+          className='absolute bottom-8 right-8 rounded-full bg-gradient-to-br from-[#1DB954] to-[#191414] p-6 shadow-md lg:fixed'
+          onClick={handleDownload}
+        >
+          <FaCameraRetro
+            className='size-6 fill-white'
+            title='download'
+            aria-label='download'
+          />
+        </button>
       </div>
       <div className='relative flex h-screen shrink-0 basis-full snap-center items-center justify-center overflow-y-auto lg:h-auto lg:basis-auto lg:overflow-y-visible'>
         <form className='absolute top-0 flex w-full max-w-[480px] flex-col items-stretch space-y-8 p-8 lg:static lg:inset-auto'>
@@ -234,17 +256,26 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
           </div>
         </form>
       </div>
-      <button
-        type='button'
-        className='fixed bottom-8 right-8 rounded-full bg-gradient-to-br from-[#1DB954] to-[#191414] p-6 shadow-md'
-        onClick={handleDownload}
-      >
-        <FaCameraRetro
-          className='size-6 fill-white'
-          title='download'
-          aria-label='download'
-        />
-      </button>
+      {showTutorail && (
+        <div
+          className={classNames(
+            'fixed inset-0 flex flex-col items-center justify-center gap-y-8 bg-black/50 lg:hidden',
+            styles['scroll-tutorial'],
+          )}
+        >
+          <span className='text-lg text-gray-200'>
+            Scroll right to customize
+          </span>
+          <FaArrowRightLong
+            className={classNames(
+              'size-8 animate-bounce fill-gray-200',
+              styles['animate-horizontal-bounce'],
+            )}
+            title='scroll right to preview'
+            aria-label='scroll right to preview'
+          />
+        </div>
+      )}
     </section>
   );
 };
