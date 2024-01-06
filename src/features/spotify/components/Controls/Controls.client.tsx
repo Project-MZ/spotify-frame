@@ -12,6 +12,10 @@ import { PlayButton } from '../PlayButton';
  */
 type Props = CircleConfig &
   GroupPosition & {
+    /** button color */
+    buttonColor: string;
+    /** text color */
+    textColor: string;
     /** whether the song is being played */
     playing: boolean;
   };
@@ -24,6 +28,8 @@ export const Controls = ({
   y,
   radius = 0,
   playing = false,
+  buttonColor,
+  textColor,
   ...props
 }: Props): JSX.Element => {
   const { relativeX } = useKonvaContext();
@@ -33,9 +39,15 @@ export const Controls = ({
 
   return (
     <Group x={x} y={y}>
-      <NavButton x={-space} type='prev' side={navSide} />
-      <PlayButton {...props} radius={radius} playing={playing} />
-      <NavButton x={space} type='next' side={navSide} />
+      <NavButton x={-space} type='prev' side={navSide} color={buttonColor} />
+      <PlayButton
+        {...props}
+        radius={radius}
+        playing={playing}
+        backgroundColor={buttonColor}
+        textColor={textColor}
+      />
+      <NavButton x={space} type='next' side={navSide} color={buttonColor} />
     </Group>
   );
 };

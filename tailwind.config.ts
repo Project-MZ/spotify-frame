@@ -5,8 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'spotify-green': '#1DB954',
-        'spotify-black': '#191414',
+        'spotify-green': '#1ed760',
+        'spotify-black': '#121212',
       },
     },
   },

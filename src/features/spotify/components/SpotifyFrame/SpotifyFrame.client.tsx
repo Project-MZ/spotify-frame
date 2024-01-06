@@ -22,6 +22,12 @@ type Props = Omit<
 > & {
   /** image src */
   src: string;
+  /** background color */
+  backgroundColor: string;
+  /** text color */
+  textColor: string;
+  /** secondary color */
+  secondaryColor: string;
   /** title */
   title: string;
   /** artist */
@@ -43,6 +49,9 @@ type Props = Omit<
  */
 export const SpotifyFrame = ({
   src,
+  backgroundColor,
+  textColor,
+  secondaryColor,
   title,
   artist,
   liked = false,
@@ -66,7 +75,7 @@ export const SpotifyFrame = ({
   return (
     <FullWidthStage {...props} base={base} aspectRatio={3 / 4} maxWidth={400}>
       <Layer>
-        <Rect width={width} height={height} fill='#ffffff' />
+        <Rect width={width} height={height} fill={backgroundColor} />
         <Group x={padding}>
           <Image
             src={src}
@@ -75,7 +84,7 @@ export const SpotifyFrame = ({
             width={imageWidth}
             height={imageWidth}
             cornerRadius={5}
-            fill='rgb(229 231 235)' // text-gray-200
+            fill={secondaryColor}
           />
           <Group y={relativeY(625)}>
             <Group>
@@ -86,6 +95,7 @@ export const SpotifyFrame = ({
                 fontFamily='Roboto'
                 fontSize={headingFontSize}
                 fontStyle='700'
+                fill={textColor}
               />
               <Group y={headingFontSize + relativeY(15)}>
                 <Text
@@ -95,14 +105,14 @@ export const SpotifyFrame = ({
                   fontFamily='Roboto'
                   fontSize={headingFontSize * 0.5}
                   fontStyle='400'
-                  fill='rgb(156 163 175)' // text-gray-400
+                  fill={secondaryColor}
                 />
                 <Heart
                   x={fullWidth - iconWidth * 2}
                   y={(iconWidth - headingFontSize) / 2}
                   width={iconWidth}
-                  stroke={liked ? 'rgb(244 114 182)' : '#000000'} // text-pink-400
-                  fill={liked ? 'rgb(244 114 182)' : undefined} // text-pink-400
+                  stroke={textColor}
+                  fill={liked ? textColor : undefined}
                 />
               </Group>
             </Group>
@@ -110,7 +120,9 @@ export const SpotifyFrame = ({
               <ProgressBar
                 width={fullWidth}
                 height={relativeY(5)}
-                fill='#000000'
+                fill={textColor}
+                backgroundColor={secondaryColor}
+                textColor={textColor}
                 nowAt={nowAt}
                 duration={duration}
                 progress={progress}
@@ -121,13 +133,15 @@ export const SpotifyFrame = ({
                 y={relativeY(100)}
                 radius={relativeX(50)}
                 playing={playing}
+                buttonColor={textColor}
+                textColor={backgroundColor}
               />
               <Group y={relativeY(175)}>
-                <Repeat width={iconWidth} fill='#000000' />
+                <Repeat width={iconWidth} fill={textColor} />
                 <Share
                   x={fullWidth - iconWidth * 2}
                   width={iconWidth}
-                  fill='#000000'
+                  fill={textColor}
                 />
               </Group>
             </Group>

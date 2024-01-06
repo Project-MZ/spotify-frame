@@ -34,6 +34,9 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [showTutorail, setShowTutorial] = useState(true);
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+  const [textColor, setTextColor] = useState('#121212');
+  const [secondaryColor, setSecondaryColor] = useState('rgb(209 213 219)');
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
   const [artist, setArtist] = useState('JOHN and JANE');
   const [liked, setLiked] = useState(false);
@@ -68,6 +71,19 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     URL.revokeObjectURL(src);
     setSrc('');
     setCroppedDataURL('');
+  };
+  const handleBackgroundColorChange: ChangeEventHandler<HTMLInputElement> = (
+    e,
+  ) => {
+    setBackgroundColor(e.target.value);
+  };
+  const handleTextColorChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTextColor(e.target.value);
+  };
+  const handleSecondaryColorChange: ChangeEventHandler<HTMLInputElement> = (
+    e,
+  ) => {
+    setSecondaryColor(e.target.value);
   };
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -135,6 +151,9 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
             <SpotifyFrame
               stageRef={stageRef}
               src={dataURL}
+              backgroundColor={backgroundColor}
+              textColor={textColor}
+              secondaryColor={secondaryColor}
               title={title}
               artist={artist}
               liked={liked}
@@ -191,7 +210,6 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
                 id='cover'
                 className='flex h-48 flex-col items-center justify-center gap-y-4'
                 name='cover'
-                placeholder='Cover'
                 accept='image/*'
                 value={src}
                 onChange={handleFileChange}
@@ -203,6 +221,36 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
                 </span>
               </DnDFileInput>
             )}
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='backgroundColor'>Background Color</Label>
+            <Input
+              id='backgroundColor'
+              type='color'
+              name='backgroundColor'
+              value={backgroundColor}
+              onChange={handleBackgroundColorChange}
+            />
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='textColor'>Text Color</Label>
+            <Input
+              id='textColor'
+              type='color'
+              name='textColor'
+              value={backgroundColor}
+              onChange={handleTextColorChange}
+            />
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='secondaryColor'>Secondary Color</Label>
+            <Input
+              id='secondaryColor'
+              type='color'
+              name='secondaryColor'
+              value={secondaryColor}
+              onChange={handleSecondaryColorChange}
+            />
           </Fieldset>
           <Fieldset>
             <Label htmlFor='title'>Title</Label>

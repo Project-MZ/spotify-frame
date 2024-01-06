@@ -9,6 +9,10 @@ import { Triangle, useKonvaContext } from '~/features/konva';
  */
 type Props = CircleConfig &
   GroupPosition & {
+    /** background color */
+    backgroundColor: string;
+    /** text color */
+    textColor: string;
     /** whether the song is being played */
     playing: boolean;
   };
@@ -19,20 +23,21 @@ type Props = CircleConfig &
 export const PlayButton = ({
   x,
   y,
+  backgroundColor,
+  textColor,
   radius = 0,
   playing = false,
   ...props
 }: Props): JSX.Element => {
   const { relativeX } = useKonvaContext();
   const barCornerRadius = 9999;
-  const barFill = '#ffffff';
   const barWidth = relativeX(8);
   const barHeight = radius * 0.7;
   const triangleSize = radius * 0.4;
 
   return (
     <Group x={x} y={y}>
-      <Circle {...props} radius={radius} fill='#000000' />
+      <Circle {...props} radius={radius} fill={backgroundColor} />
       {playing ? (
         <Group y={-barHeight / 2}>
           <Rect
@@ -40,18 +45,18 @@ export const PlayButton = ({
             width={barWidth}
             height={barHeight}
             cornerRadius={barCornerRadius}
-            fill={barFill}
+            fill={textColor}
           />
           <Rect
             x={-barWidth / 2 + barWidth}
             width={barWidth}
             height={barHeight}
             cornerRadius={barCornerRadius}
-            fill={barFill}
+            fill={textColor}
           />
         </Group>
       ) : (
-        <Triangle side={triangleSize} fill='#ffffff' direction='right' />
+        <Triangle side={triangleSize} fill={textColor} direction='right' />
       )}
     </Group>
   );

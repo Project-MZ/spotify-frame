@@ -9,6 +9,10 @@ import { useKonvaContext } from '~/features/konva';
  * props for {@link ProgressBar}
  */
 type Props = RectConfig & {
+  /** background color */
+  backgroundColor: string;
+  /** text color */
+  textColor: string;
   /** where to place circle (between 0 to 1) */
   progress: number;
   /** text for current point of the music */
@@ -26,6 +30,8 @@ export const ProgressBar = ({
   x = 0,
   y = 0,
   width = 0,
+  backgroundColor,
+  textColor,
   progress = 0.33,
   nowAt = '',
   duration = '',
@@ -44,7 +50,7 @@ export const ProgressBar = ({
           {...props}
           width={width}
           cornerRadius={cornerRadius}
-          fill='rgb(229 231 235)' // text-gray-200
+          fill={backgroundColor}
         />
         <Rect
           {...props}
@@ -59,6 +65,7 @@ export const ProgressBar = ({
           wrap='none'
           fontSize={fontSize}
           align='left'
+          fill={textColor}
         />
         <Text
           width={width}
@@ -66,6 +73,7 @@ export const ProgressBar = ({
           wrap='none'
           fontSize={fontSize}
           align='right'
+          fill={textColor}
         />
       </Group>
     </Group>
