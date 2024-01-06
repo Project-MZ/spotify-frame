@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { BASE_URL } from '~/config';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 const name = 'Spotify Frame';
 const description =
@@ -73,7 +70,7 @@ const RootLayout = ({
         rel='stylesheet'
       />
     </head>
-    <body className={inter.className}>{children}</body>
+    <body>{children}</body>
   </html>
 );
 

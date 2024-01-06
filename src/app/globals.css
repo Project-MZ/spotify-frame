@@ -4,6 +4,7 @@
 
 @layer base {
   * {
+    font-family: Roboto, sans-serif;
     @apply focus:outline-0;
   }
 }
