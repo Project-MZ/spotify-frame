@@ -133,11 +133,10 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
         styles['no-scrollbar'],
       )}
     >
-      <div className='relative grid h-screen shrink-0 basis-full snap-center place-content-center p-8 lg:h-auto lg:basis-auto lg:p-0'>
+      <div className='relative flex h-screen shrink-0 basis-full snap-center items-center justify-center p-8 lg:h-auto lg:basis-auto lg:p-0'>
         <div
           className={classNames(
-            'sticky h-96 w-72',
-            styles['preview-container'],
+            'aspect-[2/3] w-72 lg:fixed lg:top-1/2 lg:-translate-y-1/2',
           )}
         >
           <KonvaProvider>

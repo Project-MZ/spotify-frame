@@ -7,10 +7,6 @@
   display: none;
 }
 
-.preview-container {
-  top: calc((100% - theme(height.96)) / 2);
-}
-
 @keyframes horizontal-bounce {
   0%,
   100% {
