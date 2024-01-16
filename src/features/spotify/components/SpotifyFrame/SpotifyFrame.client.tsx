@@ -150,7 +150,7 @@ export const SpotifyFrame = ({
                 radius={relativeX(60)}
                 playing={playing}
                 buttonColor={inverseColor}
-                textColor={darkTheme ? backgroundColor : themeColor}
+                textColor={themeColor}
               />
               <Group y={relativeY(175)}>
                 <Repeat width={iconWidth} fill={inverseColor} />
