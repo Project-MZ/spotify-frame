@@ -24,6 +24,10 @@ type Props = Omit<
   src: string;
   /** whether using dark theme */
   darkTheme: boolean;
+  /** whether showing cover photo */
+  showCover: boolean;
+  /** background opacity */
+  backgroundOpacity: number;
   /** title */
   title: string;
   /** artist */
@@ -46,6 +50,8 @@ type Props = Omit<
 export const SpotifyFrame = ({
   src,
   darkTheme,
+  showCover,
+  backgroundOpacity,
   title,
   artist,
   liked = false,
@@ -63,25 +69,39 @@ export const SpotifyFrame = ({
   const fullWidth = width - padding * 2;
   const headingFontSize = relativeX(50);
   const iconWidth = relativeX(25);
-  const backgroundColor = darkTheme ? '#121212' : '#FFFFFF';
-  const textColor = darkTheme ? '#FFFFFF' : '#121212';
+  const themeColor = darkTheme ? 'rgb(18, 18, 18)' : 'rgb(255, 255, 255)';
+  const inverseColor = darkTheme ? 'rgb(255, 255, 255)' : 'rgb(18, 18, 18)';
+  const backgroundColor = darkTheme
+    ? `rgba(18, 18, 18, ${backgroundOpacity})`
+    : `rgba(255, 255, 255, ${backgroundOpacity})`;
+  const authorColor = darkTheme
+    ? 'rgba(255, 255, 255, 0.75)'
+    : 'rgba(18, 18, 18, 0.5)';
   const placeholderColor = darkTheme
-    ? 'rgb(55 65 81)' // gray-700
-    : 'rgb(229 231 235)'; // gray-200
+    ? 'rgba(255, 255, 255, 0.1)'
+    : 'rgba(18, 18, 18, 0.1)';
 
   return (
     <FullWidthStage {...props} base={base} aspectRatio={2 / 3} maxWidth={400}>
       <Layer>
+        <Image
+          src={src}
+          x={-(height - width) / 2}
+          width={height}
+          height={height}
+        />
         <Rect width={width} height={height} fill={backgroundColor} />
         <Group x={padding}>
-          <Image
-            src={src}
-            y={padding}
-            width={fullWidth}
-            height={fullWidth}
-            cornerRadius={5}
-            fill={placeholderColor}
-          />
+          {showCover && (
+            <Image
+              src={src}
+              y={padding}
+              width={fullWidth}
+              height={fullWidth}
+              cornerRadius={5}
+              fill={placeholderColor}
+            />
+          )}
           <Group y={relativeY(645)}>
             <Group>
               <Text
@@ -91,7 +111,7 @@ export const SpotifyFrame = ({
                 fontFamily='Roboto'
                 fontSize={headingFontSize}
                 fontStyle='700'
-                fill={textColor}
+                fill={inverseColor}
               />
               <Group y={headingFontSize + relativeY(15)}>
                 <Text
@@ -101,13 +121,13 @@ export const SpotifyFrame = ({
                   fontFamily='Roboto'
                   fontSize={headingFontSize * 0.6}
                   fontStyle='400'
-                  fill='rgb(156 163 175)' // gray-400
+                  fill={authorColor}
                 />
                 <Heart
                   x={fullWidth - iconWidth * 2}
                   y={(iconWidth - headingFontSize) / 2}
                   width={iconWidth}
-                  stroke={liked ? 'rgb(244 114 182)' : textColor} // text-pink-400
+                  stroke={liked ? 'rgb(244 114 182)' : inverseColor} // text-pink-400
                   fill={liked ? 'rgb(244 114 182)' : undefined} // text-pink-400
                 />
               </Group>
@@ -116,9 +136,9 @@ export const SpotifyFrame = ({
               <ProgressBar
                 width={fullWidth}
                 height={relativeY(5)}
-                fill={textColor}
+                fill={inverseColor}
                 backgroundColor={placeholderColor}
-                textColor={textColor}
+                textColor={inverseColor}
                 nowAt={nowAt}
                 duration={duration}
                 progress={progress}
@@ -129,15 +149,15 @@ export const SpotifyFrame = ({
                 y={relativeY(105)}
                 radius={relativeX(60)}
                 playing={playing}
-                buttonColor={textColor}
-                textColor={backgroundColor}
+                buttonColor={inverseColor}
+                textColor={darkTheme ? backgroundColor : themeColor}
               />
               <Group y={relativeY(175)}>
-                <Repeat width={iconWidth} fill={textColor} />
+                <Repeat width={iconWidth} fill={inverseColor} />
                 <Share
                   x={fullWidth - iconWidth * 2}
                   width={iconWidth}
-                  fill={textColor}
+                  fill={inverseColor}
                 />
               </Group>
             </Group>

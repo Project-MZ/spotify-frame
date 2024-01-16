@@ -36,6 +36,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
   const [darkTheme, setDarkTheme] = useState(false);
+  const [showCover, setShowCover] = useState(true);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0.9);
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
   const [artist, setArtist] = useState('JOHN and JANE');
   const [liked, setLiked] = useState(false);
@@ -70,6 +72,11 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     URL.revokeObjectURL(src);
     setSrc('');
     setCroppedDataURL('');
+  };
+  const handleBackgroundOpacityChange: ChangeEventHandler<HTMLInputElement> = (
+    e,
+  ) => {
+    setBackgroundOpacity(+e.target.value);
   };
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -138,6 +145,8 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               stageRef={stageRef}
               src={dataURL}
               darkTheme={darkTheme}
+              showCover={showCover}
+              backgroundOpacity={backgroundOpacity}
               title={title}
               artist={artist}
               liked={liked}
@@ -224,6 +233,36 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               />
             </Switch>
           </Fieldset>
+          <Fieldset className='items-center justify-between' horizontal>
+            <Label htmlFor='showCover'>Show Cover Photo</Label>
+            <Switch
+              id='showCover'
+              checked={showCover}
+              onChange={setShowCover}
+              className={`${
+                showCover ? 'bg-spotify-green' : 'bg-gray-200'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className='sr-only'>Set whether to show cover photo</span>
+              <span
+                className={`${
+                  showCover ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          </Fieldset>
+          <Fieldset>
+            <Label htmlFor='backgroundOpacity'>Background Opacity</Label>
+            <RangeInput
+              id='backgroundOpacity'
+              name='backgroundOpacity'
+              min='0'
+              max='1'
+              step={0.01}
+              value={backgroundOpacity}
+              onChange={handleBackgroundOpacityChange}
+            />
+          </Fieldset>
           <Fieldset>
             <Label htmlFor='title'>Title</Label>
             <Input
@@ -291,6 +330,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               name='progress'
               min='0'
               max='100'
+              step={1}
               value={progress}
               onChange={handleProgressChange}
             />
