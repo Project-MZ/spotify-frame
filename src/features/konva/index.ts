@@ -1,3 +1,4 @@
+export * from './components/FilteredImage';
 export * from './components/FullWidthStage';
 export * from './components/Heart';
 export * from './components/Image';

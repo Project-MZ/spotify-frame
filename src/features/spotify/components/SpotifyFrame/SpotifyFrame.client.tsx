@@ -4,6 +4,7 @@ import { type ComponentPropsWithoutRef } from 'react';
 import { Layer, Group, Rect, Text } from 'react-konva';
 import {
   useKonvaContext,
+  FilteredImage,
   FullWidthStage,
   Image,
   Heart,
@@ -28,6 +29,8 @@ type Props = Omit<
   showCover: boolean;
   /** background opacity */
   backgroundOpacity: number;
+  /** background filter */
+  backgroundFilter: ComponentPropsWithoutRef<typeof FilteredImage>['filter'];
   /** title */
   title: string;
   /** artist */
@@ -52,6 +55,7 @@ export const SpotifyFrame = ({
   darkTheme,
   showCover,
   backgroundOpacity,
+  backgroundFilter,
   title,
   artist,
   liked = false,
@@ -83,13 +87,14 @@ export const SpotifyFrame = ({
 
   return (
     <FullWidthStage {...props} base={base} aspectRatio={2 / 3} maxWidth={400}>
+      <FilteredImage
+        src={src}
+        x={-(height - width) / 2}
+        width={height}
+        height={height}
+        filter={backgroundFilter}
+      />
       <Layer>
-        <Image
-          src={src}
-          x={-(height - width) / 2}
-          width={height}
-          height={height}
-        />
         <Rect width={width} height={height} fill={backgroundColor} />
         <Group x={padding}>
           {showCover && (

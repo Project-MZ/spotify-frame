@@ -35,9 +35,10 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [showTutorail, setShowTutorial] = useState(true);
   const [src, setSrc] = useState('');
   const [dataURL, setCroppedDataURL] = useState('');
-  const [darkTheme, setDarkTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(true);
   const [showCover, setShowCover] = useState(true);
-  const [backgroundOpacity, setBackgroundOpacity] = useState(0.9);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0.8);
+  const [backgroundBlur, setBackgroundBlur] = useState(10);
   const [title, setTitle] = useState("WE'RE GETTING MARRIED!");
   const [artist, setArtist] = useState('JOHN and JANE');
   const [liked, setLiked] = useState(false);
@@ -45,6 +46,14 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   const [progress, setProgress] = useState(33);
   const [nowAt, setNowAt] = useState(defaultDate);
   const [duration, setDuration] = useState('@HILLSIDE CLUB');
+  const [canvasFilterSupported, setCanvasFilterSupported] = useState(true);
+
+  useMounted(() => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    setCanvasFilterSupported('filter' in ctx);
+  });
 
   useMounted(() => {
     const timer = setTimeout(() => {
@@ -78,6 +87,9 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
   ) => {
     setBackgroundOpacity(+e.target.value);
   };
+  const handleBackgroundBlur: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setBackgroundBlur(+e.target.value);
+  };
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
@@ -94,10 +106,10 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     setDuration(e.target.value);
   };
   const handleDownload = async (): Promise<void> => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    const canvas = stage.content.querySelector('canvas');
-    if (!canvas) return;
+    const canvasElements = stageRef.current?.content.querySelectorAll('canvas');
+    if (canvasElements?.length !== 2) throw new Error('Dowload failed');
+    const bgCanvas = canvasElements[0];
+    const canvas = canvasElements[1];
 
     const aspectRatio = canvas.height / canvas.width;
     const witdh = 1000;
@@ -105,6 +117,17 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     const offscreen = new OffscreenCanvas(witdh, height);
     const ctx = offscreen.getContext('2d');
     if (!ctx) return;
+    ctx.drawImage(
+      bgCanvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      offscreen.width,
+      offscreen.height,
+    );
     ctx.drawImage(
       canvas,
       0,
@@ -146,6 +169,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               darkTheme={darkTheme}
               showCover={showCover}
               backgroundOpacity={backgroundOpacity}
+              backgroundFilter={`blur(${backgroundBlur}px)`}
               title={title}
               artist={artist}
               liked={liked}
@@ -262,6 +286,20 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
               onChange={handleBackgroundOpacityChange}
             />
           </Fieldset>
+          {canvasFilterSupported && (
+            <Fieldset>
+              <Label htmlFor='backgroundBlur'>Background Blur</Label>
+              <RangeInput
+                id='backgroundBlur'
+                name='backgroundBlur'
+                min='0'
+                max='25'
+                step={0.25}
+                value={backgroundBlur}
+                onChange={handleBackgroundBlur}
+              />
+            </Fieldset>
+          )}
           <Fieldset>
             <Label htmlFor='title'>Title</Label>
             <Input

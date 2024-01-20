@@ -1,7 +1,8 @@
 'use client';
 
-import type { ImageConfig } from 'konva/lib/shapes/Image';
-import { Image as KonvaImage } from 'react-konva';
+import type { Image as KonvaImage, ImageConfig } from 'konva/lib/shapes/Image';
+import { forwardRef } from 'react';
+import { Image as ReactKonvaImage } from 'react-konva';
 
 /**
  * props for {@link Image}
@@ -26,9 +27,11 @@ type Props = {
 /**
  * image
  */
-export const Image = ({ src, ...props }: Props): JSX.Element => {
-  const image = new window.Image();
-  image.src = src;
+export const Image = forwardRef<KonvaImage, Props>(
+  ({ src, ...props }, ref): JSX.Element => {
+    const image = new window.Image();
+    image.src = src;
 
-  return <KonvaImage {...props} image={image} />;
-};
+    return <ReactKonvaImage {...props} ref={ref} image={image} />;
+  },
+);
