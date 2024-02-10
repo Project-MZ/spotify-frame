@@ -53,5 +53,8 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "yarn-deduplicate": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=18.19.0"
   }
 }
