@@ -1,6 +1,6 @@
 import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
-import { BASE_URL, NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID } from '~/config';
+import { BASE_URL, GOOGLE_TAG_MANAGER_ID } from '~/config';
 import './globals.css';
 
 const name = 'Spotify Frame';
@@ -72,8 +72,8 @@ const RootLayout = ({
       />
     </head>
     <body>{children}</body>
-    {NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
-      <GoogleTagManager gtmId={NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID} />
+    {GOOGLE_TAG_MANAGER_ID && (
+      <GoogleTagManager gtmId={GOOGLE_TAG_MANAGER_ID} />
     )}
   </html>
 );

@@ -65,7 +65,7 @@ jobs:
         run: yarn build
         env:
           NEXT_PUBLIC_NODE_ENV: development
-          NEXT_PUBLIC_BASE_URL: https://spotify-frame.github.io
+          NEXT_PUBLIC_BASE_URL: https://project-mz.github.io/spotify-frame
           NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: GTM-MBMGFML8
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

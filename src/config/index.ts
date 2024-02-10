@@ -11,5 +11,5 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string;
 /**
  * Google Tag Manager ID
  */
-export const NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID = process.env
-  .NEXT_PUBLIC_NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID as string;
+export const GOOGLE_TAG_MANAGER_ID = process.env
+  .NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID as string;
