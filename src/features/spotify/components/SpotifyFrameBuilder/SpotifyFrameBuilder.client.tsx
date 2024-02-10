@@ -1,6 +1,5 @@
 'use client';
 
-import { Switch } from '@headlessui/react';
 import classNames from 'classnames';
 import { type Stage } from 'konva/lib/Stage';
 import {
@@ -17,6 +16,7 @@ import { ImageCropper } from '~/components/ImageCropper';
 import { Input } from '~/components/Input';
 import { Label } from '~/components/Label';
 import { RangeInput } from '~/components/RangeInput';
+import { SwitchInput } from '~/components/SwitchInput';
 import { KonvaProvider } from '~/features/konva';
 import { useMounted } from '~/hooks/useMounted';
 import { downloadURI } from '~/utils/download';
@@ -240,39 +240,19 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
           </Fieldset>
           <Fieldset className='items-center justify-between' horizontal>
             <Label htmlFor='darkTheme'>Dark Theme</Label>
-            <Switch
+            <SwitchInput
               id='darkTheme'
               checked={darkTheme}
               onChange={setDarkTheme}
-              className={`${
-                darkTheme ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>Set whether to like the song</span>
-              <span
-                className={`${
-                  darkTheme ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
+            />
           </Fieldset>
           <Fieldset className='items-center justify-between' horizontal>
             <Label htmlFor='showCover'>Show Cover Photo</Label>
-            <Switch
+            <SwitchInput
               id='showCover'
               checked={showCover}
               onChange={setShowCover}
-              className={`${
-                showCover ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>Set whether to show cover photo</span>
-              <span
-                className={`${
-                  showCover ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
+            />
           </Fieldset>
           <Fieldset>
             <Label htmlFor='backgroundOpacity'>Background Opacity</Label>
@@ -324,41 +304,11 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
           </Fieldset>
           <Fieldset className='items-center justify-between' horizontal>
             <Label htmlFor='liked'>Liked</Label>
-            <Switch
-              id='liked'
-              checked={liked}
-              onChange={setLiked}
-              className={`${
-                liked ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>Set whether to like the song</span>
-              <span
-                className={`${
-                  liked ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
+            <SwitchInput id='liked' checked={liked} onChange={setLiked} />
           </Fieldset>
           <Fieldset className='items-center justify-between' horizontal>
             <Label htmlFor='playing'>Playing</Label>
-            <Switch
-              id='playing'
-              checked={playing}
-              onChange={setPlaying}
-              className={`${
-                playing ? 'bg-spotify-green' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span className='sr-only'>
-                Set whether the song is being played
-              </span>
-              <span
-                className={`${
-                  playing ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
+            <SwitchInput id='playing' checked={playing} onChange={setPlaying} />
           </Fieldset>
           <Fieldset>
             <Label htmlFor='progress'>Progress</Label>

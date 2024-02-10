@@ -8,7 +8,7 @@ import styles from './RangeInput.module.css';
 type Props = ComponentPropsWithoutRef<'input'>;
 
 /**
- * input
+ * range input
  */
 export const RangeInput = ({ className, ...props }: Props): JSX.Element => (
   <input
