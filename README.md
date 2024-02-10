@@ -1,5 +1,7 @@
 # Spotify Frame
 
+[![deploy](https://github.com/Project-MZ/spotify-frame/actions/workflows/deploy.yml/badge.svg)](https://github.com/Project-MZ/spotify-frame/actions/workflows/deploy.yml)
+
 Frame your photo in a Spotify-like music player.
 
 ## Examples
