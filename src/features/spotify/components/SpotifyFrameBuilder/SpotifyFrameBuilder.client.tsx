@@ -1,5 +1,6 @@
 'use client';
 
+import { sendGTMEvent } from '@next/third-parties/google';
 import classNames from 'classnames';
 import { type Stage } from 'konva/lib/Stage';
 import {
@@ -147,6 +148,7 @@ export const SpotifyFrameBuilder = (): JSX.Element => {
     const timestamp = Date.now();
     downloadURI(objectURL, `spotify-framed-${timestamp}.png`);
     URL.revokeObjectURL(objectURL);
+    sendGTMEvent({ event: 'download' });
   };
 
   return (
